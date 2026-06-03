@@ -15,7 +15,7 @@ const username = ref<string>('');
 const password = ref<string>(''); 
 const errorMessage = ref<string>(''); 
  
-// 3. DATOS DEL ALMACÉN 
+// 3. DATOS DEL ALMACÉN  
 const listaProductos: Producto[] = [ 
   { id: 101, nombre: "Teclado Mecánico RGB", precio: 250, stock: 12 }, 
   { id: 102, nombre: "Mouse Óptico Inalámbrico", precio: 110, stock: 20 }, 
@@ -68,7 +68,7 @@ const handleLogout = (): void => {
               placeholder="••••••••"  
               required 
             /> 
-          </div> 
+          </div>
            
           <div v-if="errorMessage" class="alert alert-danger py-2 text-center small mb
 3"> 
