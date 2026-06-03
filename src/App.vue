@@ -70,8 +70,7 @@ const handleLogout = (): void => {
             /> 
           </div> 
            
-          <div v-if="errorMessage" class="alert alert-danger py-2 text-center small mb
-3"> 
+          <div v-if="errorMessage" class="alert alert-danger py-2 text-center small mb3"> 
             {{ errorMessage }} 
           </div> 
  
@@ -99,8 +98,7 @@ align-items-center py-3">
           <li  
             v-for="p in listaProductos"  
             :key="p.id"  
-            class="list-group-item d-flex justify-content-between align-items-center py
-3" 
+            class="list-group-item d-flex justify-content-between align-items-center py3" 
           > 
             <div> 
                <span class="fw-bold">{{ p.nombre }}</span> 
