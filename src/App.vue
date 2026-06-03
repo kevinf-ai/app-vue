@@ -28,7 +28,7 @@ const handleLogin = (): void => {
     isAuthenticated.value = true;
     errorMessage.value = '';
   } else {
-    errorMessage.value = 'Credenciales incorrectas. Intente de nuevo, colega.';
+    errorMessage.value = '❌ Credenciales incorrectas. Intente de nuevo, colega.';
   }
 };
 
@@ -45,7 +45,7 @@ const handleLogout = (): void => {
     <!-- V-IF: FORMULARIO DE LOGUEO (Si NO está autenticado) -->
     <div v-if="!isAuthenticated" class="card shadow border-0">
       <div class="card-header bg-dark text-white text-center py-3">
-        <h4 class="mb-0">Sistema de Gestión ITPM</h4>
+        <h4 class="mb-0">🔑 Sistema de Gestión - ITPM</h4>
         <small class="text-muted">Asignatura: DPW-207 | Estudiante: KEVIN CHOQUE APAZA</small>
       </div>
       <div class="card-body p-4">
@@ -85,13 +85,13 @@ const handleLogout = (): void => {
     <!-- V-ELSE: PANEL DE ALMACÉN (Si YA está autenticado) -->
     <div v-else class="card shadow border-0">
       <div class="card-header bg-success text-white d-flex justify-content-between align-items-center py-3">
-        <h5 class="mb-0">Panel de Almacén Activo</h5>
+        <h5 class="mb-0">🚀 Panel de Almacén - Activo</h5>
         <button @click="handleLogout" class="btn btn-sm btn-light fw-bold shadow-sm">
           Salir
         </button>
       </div>
       <div class="card-body p-4 text-center">
-        <h4 class="text-success fw-bold">¡Bienvenido al Almacén!</h4>
+        <h4 class="text-success fw-bold">¡Bienvenido, Lic. Félix Maldonado!</h4>
         <p class="text-muted small">Control de Inventarios en Tiempo Real</p>
         <hr />
         
@@ -102,7 +102,7 @@ const handleLogout = (): void => {
             class="list-group-item d-flex justify-content-between align-items-center py-3"
           >
             <div>
-              <span class="fw-bold">{{ p.nombre }}</span>
+              📦 <span class="fw-bold">{{ p.nombre }}</span>
               <br />
               <small class="text-muted">ID: {{ p.id }}</small>
             </div>
