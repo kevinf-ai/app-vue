@@ -110,7 +110,7 @@ align-items-center py-3">
                 <span class="badge bg-dark rounded-pill"> 
                   Bs. {{ p.precio }} | Stock: {{ p.stock }} pzas. 
                 </span> 
-          </li> 
+          </li>  
         </ul> 
       </div> 
     </div> 
