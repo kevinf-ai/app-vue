@@ -6,6 +6,7 @@ interface Producto {
   nombre: string;
   precio: number;
   stock: number;
+  imagen: string;
 }
 
 const isAuthenticated = ref<boolean>(false);
@@ -14,19 +15,37 @@ const password = ref<string>('');
 const errorMessage = ref<string>('');
 
 const listaProductos: Producto[] = [
-  { id: 101, nombre: "Teclado Mecánico RGB", precio: 250, stock: 12 },
-  { id: 102, nombre: "Mouse Óptico Inalámbrico", precio: 110, stock: 20 },
-  { id: 103, nombre: "Monitor Gamer 24' 144Hz", precio: 1450, stock: 5 }
+  {
+    id: 101,
+    nombre: "Teclado Mecánico RGB",
+    precio: 250,
+    stock: 12,
+    imagen: "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?auto=format&fit=crop&q=80&w=400"
+  },
+  {
+    id: 102,
+    nombre: "Mouse Óptico Inalámbrico",
+    precio: 110,
+    stock: 20,
+    imagen: "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&q=80&w=400"
+  },
+  {
+    id: 103,
+    nombre: "Monitor Gamer 24' 144Hz",
+    precio: 1450,
+    stock: 5,
+    imagen: "https://images.unsplash.com/photo-1547119957-637f8679db1e?auto=format&fit=crop&q=80&w=400" // Cambiada para que no repita la del mouse
+  }
 ];
 
-const handleLogin = (): void => {
+function handleLogin(): void {
   if (username.value === 'felix.maldonado' && password.value === 'itpm2026') {
     isAuthenticated.value = true;
     errorMessage.value = '';
   } else {
     errorMessage.value = '❌ Credenciales incorrectas. Intente de nuevo.';
   }
-};
+}
 
 const handleLogout = (): void => {
   isAuthenticated.value = false;
@@ -38,7 +57,6 @@ const handleLogout = (): void => {
 <template>
   <div class="container mt-5" style="font-family: sans-serif; max-width: 600px;">
     
-    <!-- LOGIN FORM -->
     <div v-if="!isAuthenticated" class="card shadow border-0">
       <div class="card-header bg-dark text-white text-center py-3">
         <h4 class="mb-0">🔑 Sistema de Gestión - ITPM</h4>
@@ -66,29 +84,33 @@ const handleLogout = (): void => {
       </div>
     </div>
 
-    <!-- ALMACEN PANEL -->
     <div v-else class="card shadow border-0">
       <div class="card-header bg-success text-white d-flex justify-content-between align-items-center py-3">
         <h5 class="mb-0">🚀 Panel de Almacén - Activo</h5>
         <button @click="handleLogout" class="btn btn-sm btn-light fw-bold shadow-sm">Salir</button>
       </div>
+      
       <div class="card-body p-4 text-center">
         <h4 class="text-success fw-bold">¡Bienvenido, Lic. Félix Maldonado!</h4>
         <p class="text-muted small">Control de Inventarios en Tiempo Real</p>
         <hr />
         
-        <ul class="list-group list-group-flush text-start">
-          <li v-for="p in listaProductos" :key="p.id" class="list-group-item d-flex justify-content-between align-items-center py-3">
-            <div>
-              📦 <span class="fw-bold">{{ p.nombre }}</span>
-              <br />
-              <small class="text-muted">ID: {{ p.id }}</small>
+        <div class="row row-cols-1 row-cols-md-3 g-4 mt-2">
+          <div v-for="p in listaProductos" :key="p.id" class="col">
+            <div class="card h-100 shadow-sm border-0 bg-light">
+              <img :src="p.imagen" class="card-img-top" :alt="p.nombre" style="height: 150px; object-fit: cover;">
+              <div class="card-body p-3">
+                <h6 class="card-title fw-bold mb-1">{{ p.nombre }}</h6>
+                <p class="card-text text-muted small mb-2">ID: {{ p.id }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="badge bg-success">Bs. {{ p.precio }}</span>
+                  <span class="text-primary small fw-bold">{{ p.stock }} pzas.</span>
+                </div>
+              </div>
+              <div class="card-footer bg-white border-0 p-2">
+                <button class="btn btn-outline-dark btn-sm w-100">Gestionar Stock</button>
+              </div>
             </div>
-            <span class="badge bg-dark rounded-pill">Bs. {{ p.precio }} | Stock: {{ p.stock }} pzas.</span>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-  </div>
-</template>
+          </div>
+        </div>
+      </div> </div> </div> </template>
