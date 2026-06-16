@@ -14,7 +14,8 @@ const username = ref<string>('');
 const password = ref<string>('');
 const errorMessage = ref<string>('');
 
-const listaProductos: Producto[] = [
+// Envolvemos el arreglo con ref<Producto[]> para activar la reactividad
+const listaProductos = ref<Producto[]>([
   {
     id: 101,
     nombre: "Teclado Mecánico RGB",
@@ -34,12 +35,12 @@ const listaProductos: Producto[] = [
     nombre: "Monitor Gamer 24' 144Hz",
     precio: 1450,
     stock: 5,
-    imagen: "https://images.unsplash.com/photo-1547119957-637f8679db1e?auto=format&fit=crop&q=80&w=400" // Cambiada para que no repita la del mouse
+    imagen: "https://images.unsplash.com/photo-1547119957-637f8679db1e?auto=format&fit=crop&q=80&w=400"
   }
-];
+]);
 
 function handleLogin(): void {
-  if (username.value === 'felix.maldonado' && password.value === 'itpm2026') {
+  if (username.value === 'kevin.choque' && password.value === 'itpm2026') {
     isAuthenticated.value = true;
     errorMessage.value = '';
   } else {
@@ -51,6 +52,23 @@ const handleLogout = (): void => {
   isAuthenticated.value = false;
   username.value = '';
   password.value = '';
+};
+
+// Función para incrementar (+1) el stock buscando por ID
+const incrementarStock = (id: number): void => {
+  const producto = listaProductos.value.find(p => p.id === id);
+  if (producto) {
+    producto.stock++; // Suma directo en la variable reactiva
+  }
+};
+
+// Función para decrementar (-1) con validación de seguridad
+const decrementarStock = (id: number): void => {
+  const producto = listaProductos.value.find(p => p.id === id);
+  // Regla de negocio: Solo resta si el stock es mayor a cero................
+  if (producto && producto.stock > 0) {
+    producto.stock--;
+  }
 };
 </script>
 
@@ -66,7 +84,7 @@ const handleLogout = (): void => {
         <form @submit.prevent="handleLogin">
           <div class="mb-3">
             <label class="form-label fw-bold">Usuario Docente</label>
-            <input v-model="username" type="text" class="form-control" placeholder="Ej: felix.maldonado" required />
+            <input v-model="username" type="text" class="form-control" placeholder="Ej: kevin.choque" required />
           </div>
           <div class="mb-3">
             <label class="form-label fw-bold">Contraseña</label>
@@ -91,7 +109,7 @@ const handleLogout = (): void => {
       </div>
       
       <div class="card-body p-4 text-center">
-        <h4 class="text-success fw-bold">¡Bienvenido, Lic. Félix Maldonado!</h4>
+        <h4 class="text-success fw-bold">¡Bienvenido, Lic. Kevin Choque!</h4>
         <p class="text-muted small">Control de Inventarios en Tiempo Real</p>
         <hr />
         
@@ -107,9 +125,26 @@ const handleLogout = (): void => {
                   <span class="text-primary small fw-bold">{{ p.stock }} pzas.</span>
                 </div>
               </div>
-              <div class="card-footer bg-white border-0 p-2">
-                <button class="btn btn-outline-dark btn-sm w-100">Gestionar Stock</button>
-              </div>
+<div class="card-footer bg-white border-0 p-2 pt-0">
+  <div class="d-flex gap-1">
+    
+    <button 
+      class="btn btn-outline-danger btn-sm w-50 fw-bold" 
+      @click="decrementarStock(p.id)"
+      :disabled="p.stock === 0"
+    >
+      ➖ Restar
+    </button>
+    
+    <button 
+      class="btn btn-outline-success btn-sm w-50 fw-bold" 
+      @click="incrementarStock(p.id)"
+    >
+      ➕ Sumar
+    </button>
+
+  </div>
+</div>
             </div>
           </div>
         </div>
